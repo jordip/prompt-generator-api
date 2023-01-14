@@ -8,6 +8,8 @@ import json
 import uuid
 from flask import Flask
 from flask_restful import Resource, Api, reqparse, abort
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
 # default config
@@ -45,9 +47,17 @@ api = Api(app)
 
 parser = reqparse.RequestParser()
 parser.add_argument('prompt', required=True)
+
 # optional arguments
 for arg, def_arg in default_args.items():
     parser.add_argument(arg, type=def_arg['type'], required=False)
+
+# limit the amount of requests per user
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    default_limits=["20 per minute"]
+)
 class PromptGenerator(Resource):
     """Prompt Generator Class
 
@@ -143,5 +153,4 @@ class PromptGenerator(Resource):
 api.add_resource(PromptGenerator, '/generate')
 
 if __name__ == '__main__':
-    # app.debug = True
-    app.run()
+    app.run(debug=False)
