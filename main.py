@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_restful import Resource, Api, reqparse, abort
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
+import os
+import re
 import logging
 import json
 import uuid
@@ -9,22 +11,27 @@ import uuid
 save_to_file = False
 default_args = {
     'temperature': {
+        'type': float,
         'default': 0.9,
-        'range': [0,1]
+        'range': [0, 1]
     },
     'top_k': {
+        'type': int,
         'default': 8,
         'range': [1, 200]
     },
     'max_length': {
+        'type': int,
         'default': 80,
         'range': [1, 200]
     },
     'repetition_penalty': {
+        'type': float,
         'default': 1.2,
         'range': [0, 10]
     },
     'num_return_sequences': {
+        'type': int,
         'default': 5,
         'range': [1, 5]
     },
@@ -37,11 +44,11 @@ parser = reqparse.RequestParser()
 parser.add_argument('prompt', required=True)
 # optional arguments
 for arg, def_arg in default_args.items():
-    parser.add_argument(arg, type=float, required=False)
+    parser.add_argument(arg, type=def_arg['type'], required=False)
 class PromptGenerator(Resource):
 
     # validate range, set value
-    def validateArgs(self, args):
+    def validate_args(self, args):
         for arg, def_arg in default_args.items():
             if arg in args and args[arg]:
                 if def_arg['range'][0] < args[arg] > def_arg['range'][1]:
@@ -50,10 +57,22 @@ class PromptGenerator(Resource):
             else:
                 globals()[arg] = def_arg['default']
 
+    # check and load blacklist
+    def get_blacklist(self):
+        blacklist_filename = 'blacklist.txt'
+        blacklist = []
+        if not os.path.exists(blacklist_filename):
+            logging.warning(f"Blacklist file missing: {blacklist_filename}")
+            return blacklist
+        with open(blacklist_filename, 'r') as f:
+            for line in f:
+                blacklist.append(line)
+
+            return blacklist
     # post method
     def post(self):
         args = parser.parse_args()
-        self.validateArgs(args)
+        self.validate_args(args)
 
         prompt = args['prompt']
         request_uuid = uuid.uuid4()
@@ -75,18 +94,22 @@ class PromptGenerator(Resource):
                                     repetition_penalty=repetition_penalty,
                                     penalty_alpha=0.6, no_repeat_ngram_size=1,
                                     early_stopping=True)
-            tempString = []
+            prompt_output = []
+            blacklist = self.get_blacklist()
             for i in range(len(output)):
-                tempString.append(
+                prompt_output.append(
                     tokenizer.decode(output[i], skip_special_tokens=True)
                 )
+                for term in blacklist:
+                    prompt_output[i] = re.sub(
+                        term, "", prompt_output[i], flags=re.IGNORECASE)
 
             # save results to file
             if save_to_file:
                 with open(f"{request_uuid}.json", 'w') as f:
-                    json.dump(tempString, f)
+                    json.dump(prompt_output, f)
 
-            return tempString
+            return prompt_output
 
         except Exception as e:
             logging.error(

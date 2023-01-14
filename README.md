@@ -12,15 +12,15 @@ To install required libraries run:
         pip install --upgrade transformers flask flask_restful
 
 ## Usage
-The API currently provides a POST endpoint to generate the prompt, configured to run at /generate
+The API currently provides a POST endpoint to generate the prompt, configured to run at **/generate**
 
 Run main.py and send POST requests with the following arguments in JSON.
 
-**Required arguments**
+### Required arguments
 - prompt
   - The beginning of the prompt.
 
-**Optional arguments**
+### Optional arguments
 - temperature
   - A higher temperature will produce more diverse results, but with a higher risk of less coherent text
 - top_k
@@ -32,9 +32,12 @@ Run main.py and send POST requests with the following arguments in JSON.
 - num_return_sequences
   - The number of results to generate
 
+### Blacklist
+blacklist.txt contains a list of terms to be replaced from the returned prompt. One term per line.
+
 ## TODO
 1. ~~Parametrize default arguments~~
-2. Add blacklist filtering
+2. ~~Add blacklist filtering~~
 3. Smart cropping
 4. Throttling
 5. Standards
