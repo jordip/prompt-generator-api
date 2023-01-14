@@ -38,6 +38,5 @@ blacklist.txt contains a list of terms to be replaced from the returned prompt. 
 ## TODO
 1. ~~Parametrize default arguments~~
 2. ~~Add blacklist filtering~~
-3. Smart cropping
-4. Throttling
-5. Standards
+3. Throttling
+4. ~~Standards~~
