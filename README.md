@@ -11,7 +11,7 @@ The API is based in flask and uses transformers package to interact with the mod
 
 To install required libraries run:
 
-        pip install --upgrade transformers flask flask_restful flask_limiter
+`pip install --upgrade transformers flask flask_restful flask_limiter`
 
 ## Usage
 
@@ -39,7 +39,7 @@ Run main.py and send POST requests with the following arguments in JSON.
 
 ## Sample request
 
-        curl http://127.0.0.1:5000/generate -H "Content-Type: application/json" -d '{"prompt":"cat with sunglasses"}' -X POST
+`curl http://127.0.0.1:5000/generate -H "Content-Type: application/json" -d '{"prompt":"cat with sunglasses"}' -X POST`
 
 ## Features
 
