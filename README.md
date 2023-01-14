@@ -5,20 +5,26 @@ A simple prompt generator API for Stable Diffusion / Midjourney / Dall-e based i
 Based on the implementation of the [FredZhang7/distilgpt2-stable-diffusion-v2](https://huggingface.co/FredZhang7/distilgpt2-stable-diffusion-v2) model.
 
 **Contributions are welcomed :)**
-## Requirements
-
-The API is based in flask and uses transformers package to interact with the model.
-
-To install required libraries run:
-
-`pip install --upgrade transformers flask flask_restful flask_limiter`
-
-## Usage
+## Installation and usage
 
 The API currently provides a POST endpoint to generate the prompt, configured to run at **/generate**
 
-Run main.py and send POST requests with the following arguments in JSON.
-
+1. Install the dependencies:
+```sh
+pip install --upgrade transformers flask flask_restful flask_limiter
+```
+2. Clone the code of this repository:
+```sh
+git clone https://github.com/jordip/prompt-generator-api.git
+```
+3. Run main.py from the root path:
+```sh
+python3 main.py
+```
+4. Send a POST request to your instance of the API:
+```sh
+curl http://127.0.0.1:5000/generate -H "Content-Type: application/json" -d '{"prompt":"cat with sunglasses"}' -X POST`
+```
 ### Required arguments
 
 - prompt
@@ -27,20 +33,15 @@ Run main.py and send POST requests with the following arguments in JSON.
 ### Optional arguments
 
 - temperature
-  - A higher temperature will produce more diverse results, but with a higher risk of less coherent text
+  - A higher temperature will produce more diverse results, but with a higher risk of less coherent text.
 - top_k
-  - The number of tokens to sample from at each step
+  - The number of tokens to sample from at each step.
 - max_length
-  - The maximum number of tokens for the output of the model
+  - The maximum number of tokens for the output of the model.
 - repetition_penalty
-  - The penalty value for each repetition of a token
+  - The penalty value for each repetition of a token.
 - num_return_sequences
-  - The number of results to generate
-
-## Sample request
-
-`curl http://127.0.0.1:5000/generate -H "Content-Type: application/json" -d '{"prompt":"cat with sunglasses"}' -X POST`
-
+  - The number of results to generate.
 ## Features
 
 ### Blacklist

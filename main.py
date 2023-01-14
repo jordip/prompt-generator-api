@@ -58,6 +58,7 @@ limiter = Limiter(
     app=app,
     default_limits=["20 per minute"]
 )
+
 class PromptGenerator(Resource):
     """Prompt Generator Class
 
@@ -66,7 +67,7 @@ class PromptGenerator(Resource):
     """
 
     def validate_args(self, args):
-        """Validate range, set value
+        """Validate range, set dynamic variables value
 
         Args:
             args dict: Arguments provided in the request
@@ -84,7 +85,7 @@ class PromptGenerator(Resource):
         """Check and load blacklist
 
         Returns:
-            list: List of terms from the blacklist dictionary.
+            list: List of terms from the blacklist dictionary
         """
         blacklist_filename = 'blacklist.txt'
         blacklist = []
@@ -101,7 +102,7 @@ class PromptGenerator(Resource):
         """Post method
 
         Returns:
-            string: JSON list with the generated prompts.
+            string: JSON list with the generated prompts
         """
         args = parser.parse_args()
         self.validate_args(args)
