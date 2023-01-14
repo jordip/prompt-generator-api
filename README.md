@@ -11,7 +11,7 @@ The API currently provides a POST endpoint to generate the prompt, configured to
 
 1. Install the dependencies:
 ```sh
-pip install --upgrade transformers flask flask_restful flask_limiter
+pip install --upgrade torch transformers flask flask_restful flask_limiter
 ```
 2. Clone the code of this repository:
 ```sh
@@ -23,7 +23,7 @@ python3 main.py
 ```
 4. Send a POST request to your instance of the API:
 ```sh
-curl http://127.0.0.1:5000/generate -H "Content-Type: application/json" -d '{"prompt":"cat with sunglasses"}' -X POST`
+curl http://127.0.0.1:5000/generate -H "Content-Type: application/json" -d '{"prompt":"cat with sunglasses"}' -X POST
 ```
 ### Required arguments
 
