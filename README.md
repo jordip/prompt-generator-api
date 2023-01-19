@@ -4,7 +4,7 @@ A simple prompt generator API for Stable Diffusion / Midjourney / Dall-e based i
 
 Based on the implementation of the [FredZhang7/distilgpt2-stable-diffusion-v2](https://huggingface.co/FredZhang7/distilgpt2-stable-diffusion-v2) model.
 
-**Contributions are welcomed :)**
+**Contributions are welcome :)**
 ## Installation and usage
 
 The API currently provides a POST endpoint to generate the prompt, configured to run at **/generate**
@@ -33,15 +33,15 @@ curl http://127.0.0.1:5000/generate -H "Content-Type: application/json" -d '{"pr
 ### Optional arguments
 
 - temperature
-  - A higher temperature will produce more diverse results, but with a higher risk of less coherent text.
+  - A higher temperature will produce more diverse results, but with a higher risk of less coherent text. Default: 0.9
 - top_k
-  - The number of tokens to sample from at each step.
+  - The number of tokens to sample from at each step. Default: 80
 - max_length
-  - The maximum number of tokens for the output of the model.
+  - The maximum number of tokens for the output of the model. Default: 80
 - repetition_penalty
-  - The penalty value for each repetition of a token.
+  - The penalty value for each repetition of a token. Default: 1.2
 - num_return_sequences
-  - The number of results to generate.
+  - The number of results to generate. Default: 5
 ## Features
 
 ### Blacklist
