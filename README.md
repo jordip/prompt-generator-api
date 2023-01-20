@@ -2,9 +2,28 @@
 
 A simple prompt generator API for Stable Diffusion / Midjourney / Dall-e based in Python.
 
+The API takes an initial prompt of a few words, and generates an extended and detailed prompt.
+
 Based on the implementation of the [FredZhang7/distilgpt2-stable-diffusion-v2](https://huggingface.co/FredZhang7/distilgpt2-stable-diffusion-v2) model.
 
 **Contributions are welcome :)**
+## Example
+
+**Initial prompt**
+
+> cat with sunglasses
+
+**Results of this prompt using Stable Diffusion v1.5**
+
+![rdm-figure](img/simple-prompt.png)
+
+**Generated prompt using this API**
+> cat with sunglasses, in the style of studio ghibli painting. cinematic lighting from right side on image and sharp focus by jean - baptiste monge! octane render redshift unreal engine 5 lumen global illumination ray tracing hdr arstation pixar disney tone mapping shiny reflectionsordan grimmer 4 k 8 lois van baal enki bilan ilya
+
+**Results of this prompt using Stable Diffusion v1.5**
+
+![rdm-figure](img/generated-prompt.png)
+
 ## Installation and usage
 
 The API currently provides a POST endpoint to generate the prompt, configured to run at **/generate**
